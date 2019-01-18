@@ -16,7 +16,10 @@ router.route('/users')
         //TODO: Controller for handling username input sanitizing and field existance
         if (req.body.hasOwnProperty('username'))
             new User(user_service, req.body.username).save_new_user()
-                .then(() => res.send('Success'))
+                .then(() => {
+                    req.session.username = req.body.username
+                    res.send('Success')
+                })
                 .catch(err => next(err))
         else
             res.status(400).send({'error':'"username" property missing from request body.'})
@@ -28,7 +31,10 @@ router.route('/login')
         //TODO: forward error to generic error handler, only set status here, and only set to 401 if username wasn't found
         if (req.body.hasOwnProperty('username'))
             new User(user_service, req.body.username).get()
-                .then((username) => res.send(`Success: ${username} logged in successfully`))
+                .then((username) => {
+                    req.session.username = req.body.username
+                    res.send(`Success: ${username} logged in successfully`)
+                })
                 .catch(err => res.status(401).send({"error": err.message}))
         else
             res.status(400).send({'error':'"username" property missing from request body.'})
@@ -37,12 +43,12 @@ router.route('/login')
 //TODO: replace with user gotten from session
 router.route('/locations')
     .post((req, res, next) => {
-        new User(user_service, req.body.username).add_location(req.body.location)
+        new User(user_service, req.session.username).add_location(req.body.location)
             .then(locations => res.send(locations))
             .catch(err => next(err))
     })
     .get((req, res, next) => {
-        new User(user_service, req.body.username).get_locations()
+        new User(user_service, req.session.username).get_locations()
             .then(locations => res.send(locations))
             .catch(err => next(err))
     })
@@ -61,7 +67,10 @@ router.use((req, res, next) => {
 
 router.use((err, req, res, next) => {
     console.log(err)
-    res.status(500).send({'error': err.toString()})
+    if (!req.session.hasOwnProperty('username'))
+        res.status(401).send({'error': 'Session has expired'})
+    else
+        res.status(500).send({'error': err.toString()})
 })
 
 export {router}
