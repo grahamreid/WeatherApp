@@ -1,37 +1,35 @@
 export default class User {
-    constructor(name) {
-        this._name = name
-        this._locations = ['first place']
+    constructor(user_service, username) {
+        this._username = username
+        this._user_service = user_service
     }
     
     //TODO: Add unit test
     //TODO: Throw specific error type for user already exists
-    async get() {
-        // throw new Error(`User ${this._name} does not exist.`)
-        return this._name
+    get() {
+        return this._user_service.get_user(this._username)
     }
 
-    async get_locations() {
-        return this._locations
+    get_locations() {
+        return this._user_service.get_locations(this._username)
     }
 
     //TODO: try/catch
-    async add_location(location) {
+    add_location(location) {
         return this.get_locations()
                 .then(locations => {
                     locations.push(location)
                     return locations
                 })
-                .then(locations => {return this.save(locations)})
+                .then(locations => this.save_locations(locations))
     }
-    
-    //TODO: Add unit test
-    //TODO: check if name already exists
-    //TODO: throw exception if name already exists
-    //TODO: get location, append new, and then save to redis
-    async save(locations) {
-        this._locations = locations
-        return this._locations
+
+    save_new_user() {
+        return this._user_service.set_new_user(this._username)
+    }
+
+    save_locations(locations) {
+        return this._user_service.set_locations(this._username, locations)
     }
 
 
