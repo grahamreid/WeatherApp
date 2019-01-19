@@ -3,26 +3,27 @@ export default class UserService_Redis {
         this._redisConnector = redisConnector
     }
 
-    //Unit test this stuff, including invalid credentials
-    
+    //Unit test and try catch this stuff
+    //Accept whatever they login with -- save new user if doesn't exist
     get_user(username) {
         return this._redisConnector.get(username)
             .then(user_info => {
                 if (user_info !== null) 
                     return user_info.username
-                else
-                    throw "Invalid Credentials"
+                else 
+                    return this.set_user(username)
             })
+            .then(() => {return username})
     }
 
-    set_new_user(username) {
-        return this._redisConnector.get(username)
-            .then(user_info => {
-                if (user_info !== null)
-                    throw "User already exists!"
-            })
-            .then(() => {return this.set_user(username)})
-    }
+    // create_user(username) {
+    //     return this._redisConnector.get(username)
+    //         .then(user_info => {
+    //             if (user_info !== null)
+    //                 throw "User already exists!"
+    //         })
+    //         .then(() => {return this.set_user(username)})
+    // }
 
     // In another db, this would be a separate query, 
     // But since this is redis, just save it all together

@@ -11,19 +11,19 @@ const user_service = new UserService_Redis(redis_conn);
 
 //Integration Test: when username not provided
 //Integration Test: when content-type is not application/json
-router.route('/users')
-    .post((req, res, next) => {
-        //TODO: Controller for handling username input sanitizing and field existance
-        if (req.body.hasOwnProperty('username'))
-            new User(user_service, req.body.username).save_new_user()
-                .then(() => {
-                    req.session.username = req.body.username
-                    res.send('Success')
-                })
-                .catch(err => next(err))
-        else
-            res.status(400).send({'error':'"username" property missing from request body.'})
-    })   
+// router.route('/users')
+//     .post((req, res, next) => {
+//         //TODO: Controller for handling username input sanitizing and field existance
+//         if (req.body.hasOwnProperty('username'))
+//             new User(user_service, req.body.username).save_new_user()
+//                 .then(() => {
+//                     req.session.username = req.body.username
+//                     res.send('Success')
+//                 })
+//                 .catch(err => next(err))
+//         else
+//             res.status(400).send({'error':'"username" property missing from request body.'})
+//     })   
 
 //User "Posts" a new login attempt
 router.route('/login')
@@ -33,9 +33,11 @@ router.route('/login')
             new User(user_service, req.body.username).get()
                 .then((username) => {
                     req.session.username = req.body.username
-                    res.send(`Success: ${username} logged in successfully`)
+                    res.send({"username": req.body.username})
                 })
                 .catch(err => res.status(401).send({"error": err.message}))
+        else if (req.session.hasOwnProperty(username))
+                res.send(req.session.username)
         else
             res.status(400).send({'error':'"username" property missing from request body.'})
     }) 

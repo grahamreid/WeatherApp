@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<nav class="navbar navbar-expand-md navbar-light bg-light justify-content-center">
-  <div class="mw-sm d-flex w-100">
-    <a class="navbar-brand" href="">
+<nav class="navbar navbar-expand-md navbar-light bg-light justify-content-center border-bottom">
+  <div class="maxw-sm d-flex w-100">
+    <a class="navbar-brand mr-0" href="">
       <i class="fa fa-sun-o fa-lg"></i>
       WeatherGram
       <!-- <span class="fa-cloud-sun-rain"></span> -->
@@ -10,11 +10,13 @@
       <a class="nav-link dropdown-toggle" href="#" id="logoutDropdown" role=button data-toggle="dropdown">
         Dropdown
       </a>
-      <div class="dropdown-menu mw-0">
+      <div class="dropdown-menu minw-0">
           <a class="dropdown-item" href="#">Logout</a>
         </div>
     </div>
   </div>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="maxw-sm mx-auto w-100">
+  <router-outlet></router-outlet>
+</div>

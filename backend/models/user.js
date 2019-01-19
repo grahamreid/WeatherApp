@@ -24,9 +24,9 @@ export default class User {
                 .then(locations => this.save_locations(locations))
     }
 
-    save_new_user() {
-        return this._user_service.set_new_user(this._username)
-    }
+    // create_new() {
+    //     return this._user_service.create_user(this._username)
+    // }
 
     save_locations(locations) {
         return this._user_service.set_locations(this._username, locations)
