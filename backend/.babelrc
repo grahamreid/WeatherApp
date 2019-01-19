@@ -6,7 +6,7 @@
         ["module-resolver", {
             "root": "./",
             "alias": {
-                "app": "./src/backend",
+                "app": "./",
                 "root": "./"
             }
         }]

@@ -3,12 +3,14 @@ import bodyParser from 'body-parser'
 import argv from 'yargs'
 import express from 'express'
 import session from 'express-session'
-import config from 'app/config.json'
+import config from 'config.json'
 import morgan from 'morgan'
+import path from 'path'
 
 var RedisStore = require('connect-redis')(session);
 
 const app = express()
+
 // const RedisStoreSession = RedisStore(session)
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -26,6 +28,10 @@ app.use(session({
 }))
 
 app.use('/api', router)
+
+app.use('/', express.static(path.join(__dirname, '../public/dist')))
+
+app.use('*', express.static(path.join(__dirname, '../public/dist')))
 
 app.use((req, res, next) => {
     res.status(404).send()

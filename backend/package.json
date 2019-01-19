@@ -2,10 +2,11 @@
    "name": "weatherapp",
    "version": "1.0.0",
    "description": "A simple app that fetches weather data.",
-   "main": "src/backend/app.js",
+   "main": "app.js",
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "nodemon --exec babel-node src/backend/app.js"
+      "start": "nodemon --exec babel-node app.js",
+      "build": "cd ../frontend; ng build"
    },
    "author": "Graham Reid",
    "license": "MIT",
