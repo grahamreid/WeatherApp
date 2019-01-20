@@ -9,48 +9,40 @@ let router = express.Router();
 const redis_conn = new RedisConnector(config.redis)
 const user_service = new UserService_Redis(redis_conn);
 
-//Integration Test: when username not provided
-//Integration Test: when content-type is not application/json
-// router.route('/users')
-//     .post((req, res, next) => {
-//         //TODO: Controller for handling username input sanitizing and field existance
-//         if (req.body.hasOwnProperty('username'))
-//             new User(user_service, req.body.username).save_new_user()
-//                 .then(() => {
-//                     req.session.username = req.body.username
-//                     res.send('Success')
-//                 })
-//                 .catch(err => next(err))
-//         else
-//             res.status(400).send({'error':'"username" property missing from request body.'})
-//     })   
+const USERNAME = 'USERNAME'
 
 //User "Posts" a new login attempt
 router.route('/login')
+    .get((req, res, next) => {
+        if (req.session.hasOwnProperty("username"))
+            res.send({"username": req.session.username})
+        else
+            res.status(401).send({'error': 'Not logged in'})
+    })
     .post((req, res, next) => {
-        //TODO: forward error to generic error handler, only set status here, and only set to 401 if username wasn't found
-        if (req.body.hasOwnProperty('username'))
+        //TODO: forward error to generic error handler, only set status here, and only set to 401 if USERNAME wasn't found
+        if (req.body.hasOwnProperty("username"))
             new User(user_service, req.body.username).get()
                 .then((username) => {
                     req.session.username = req.body.username
-                    res.send({"username": req.body.username})
+                    res.send({username: req.body.username})
                 })
                 .catch(err => res.status(401).send({"error": err.message}))
-        else if (req.session.hasOwnProperty(username))
+        else if (req.session.hasOwnProperty("username"))
                 res.send(req.session.username)
         else
-            res.status(400).send({'error':'"username" property missing from request body.'})
+            res.status(400).send({'error': `"username" property missing from request body.`})
     }) 
 
 //TODO: replace with user gotten from session
 router.route('/locations')
     .post((req, res, next) => {
-        new User(user_service, req.session.username).add_location(req.body.location)
+        new User(user_service, req.session.USERNAME).add_location(req.body.location)
             .then(locations => res.send(locations))
             .catch(err => next(err))
     })
     .get((req, res, next) => {
-        new User(user_service, req.session.username).get_locations()
+        new User(user_service, req.session.USERNAME).get_locations()
             .then(locations => res.send(locations))
             .catch(err => next(err))
     })
@@ -69,7 +61,7 @@ router.use((req, res, next) => {
 
 router.use((err, req, res, next) => {
     console.log(err)
-    if (!req.session.hasOwnProperty('username'))
+    if (!req.session.hasOwnProperty(USERNAME))
         res.status(401).send({'error': 'Session has expired'})
     else
         res.status(500).send({'error': err.toString()})

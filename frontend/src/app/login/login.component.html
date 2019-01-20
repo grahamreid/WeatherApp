@@ -6,11 +6,12 @@
 </div>
 <div class="card w-75 w-xs-100 mx-auto py-5 minw-xxs">
   <form class="maxw-sm mx-auto d-flex flex-column w-75">
-      <h3 class="mb-4">Sign in <b>weather</b> you like it or not!</h3>
+      <h4 class="mb-4 text-center">An app that will make you question <b>weather</b> I'm any good at puns.</h4>
       <div class="form-group">
         <label for="login">Login</label>
-        <input type="username" class="form-control" id="login" placeholder="Enter Username">
+        <input #username type="username" class="form-control" id="login" placeholder="Enter Username">
+        <small id="signInHelp" class="form-text text-muted">No existing username required; Sign in to sign up.</small>
       </div>
-      <button type="submit" class="btn btn-primary mx-3">Submit</button>
+      <div class="btn btn-primary mx-3" (click)="handle_login(username.value)">Sign in</div>
   </form>
 </div>

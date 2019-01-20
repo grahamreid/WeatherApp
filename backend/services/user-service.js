@@ -16,15 +16,6 @@ export default class UserService_Redis {
             .then(() => {return username})
     }
 
-    // create_user(username) {
-    //     return this._redisConnector.get(username)
-    //         .then(user_info => {
-    //             if (user_info !== null)
-    //                 throw "User already exists!"
-    //         })
-    //         .then(() => {return this.set_user(username)})
-    // }
-
     // In another db, this would be a separate query, 
     // But since this is redis, just save it all together
     set_user(username) {
