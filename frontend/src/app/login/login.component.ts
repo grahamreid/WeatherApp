@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   handle_login(username: string) {
+    if (username==='')
+      return
     this.user_service.login(username)
       .subscribe((data) => {
         this._router.navigateByUrl("dashboard")

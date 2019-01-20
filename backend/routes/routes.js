@@ -21,7 +21,7 @@ router.route('/login')
             res.status(401).send({'error': 'Not logged in'})
     })
     .post((req, res, next) => {
-        //TODO: forward error to generic error handler, only set status here, and only set to 401 if USERNAME wasn't found
+        //TODO: forward error to generic error handler, only set status here, and only set to 401 if username wasn't found
         if (req.body.hasOwnProperty("username"))
             new User(user_service, req.body.username).get()
                 .then((username) => {
@@ -42,12 +42,12 @@ router.route('/login')
 //TODO: replace with user gotten from session
 router.route('/locations')
     .post((req, res, next) => {
-        new User(user_service, req.session.USERNAME).add_location(req.body.location)
+        new User(user_service, req.session.username).add_location(req.body.location)
             .then(locations => res.send(locations))
             .catch(err => next(err))
     })
     .get((req, res, next) => {
-        new User(user_service, req.session.USERNAME).get_locations()
+        new User(user_service, req.session.username).get_locations()
             .then(locations => res.send(locations))
             .catch(err => next(err))
     })
@@ -66,7 +66,7 @@ router.use((req, res, next) => {
 
 router.use((err, req, res, next) => {
     console.log(err)
-    if (!req.session.hasOwnProperty(USERNAME))
+    if (!req.session.hasOwnProperty('username'))
         res.status(401).send({'error': 'Session has expired'})
     else
         res.status(500).send({'error': err.toString()})

@@ -7,12 +7,14 @@ import { CoreModule } from '@app-root/core/core.module'
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { LocationComponent } from './dashboard/location/location.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    LocationComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<nav class="navbar navbar-expand-md navbar-light bg-light justify-content-center border-bottom">
+<nav class="navbar navbar-expand-md navbar-light bg-white justify-content-center border-bottom">
   <div class="maxw-sm d-flex w-100">
     <a class="navbar-brand mr-0" href="">
       <i class="fa fa-sun-o fa-lg"></i>
@@ -8,9 +8,11 @@
     </a>
     <div class="navbar-item dropdown ml-auto" *ngIf="_username!==''">
       <a class="nav-link dropdown-toggle" href="#" id="logoutDropdown" role=button data-toggle="dropdown">
-        {{_username}}
+        <i class="fa fa-lg fa-user"></i>
       </a>
       <div class="dropdown-menu minw-0">
+          <p class="maxw-150p overflow-ellipsis mb-0 mx-4">{{_username}}</p>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item cursor-pointer" (click)=logout()>Logout</a>
         </div>
     </div>

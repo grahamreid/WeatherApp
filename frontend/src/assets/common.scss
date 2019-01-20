@@ -1,3 +1,11 @@
+@import "node_modules/bootstrap/scss/_functions.scss";
+@import "node_modules/bootstrap/scss/_variables.scss";
+@import "node_modules/bootstrap/scss/mixins/_breakpoints.scss";
+
+.maxw-150p {
+    max-width: 150px;
+}
+
 .maxw-sm {
     max-width: 768px;
 }
@@ -10,6 +18,21 @@
     min-width: 0px;
 }
 
+.overflow-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+
 .cursor-pointer {
     cursor: pointer
+}
+
+.fineprint {
+    font-size: 0.8rem
+}
+
+@include media-breakpoint-down(sm) {
+    .hide-xs {
+        display: none;
+    }
 }
