@@ -12,6 +12,7 @@ const user_service = new UserService_Redis(redis_conn);
 const USERNAME = 'USERNAME'
 
 //User "Posts" a new login attempt
+//Really this endpoint should probably change to "session"
 router.route('/login')
     .get((req, res, next) => {
         if (req.session.hasOwnProperty("username"))
@@ -32,7 +33,11 @@ router.route('/login')
                 res.send(req.session.username)
         else
             res.status(400).send({'error': `"username" property missing from request body.`})
-    }) 
+    })
+    .delete((req, res, next) => {
+        req.session.destroy()
+        res.send({'Success': 'Successfully Logged out.'})
+    })
 
 //TODO: replace with user gotten from session
 router.route('/locations')

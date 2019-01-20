@@ -12,22 +12,31 @@ import {Router} from '@angular/router'
 })
 export class AppComponent {
   
-  _username: string
+  _username: string = ''
 
-  constructor(private user_service: UserService_Rest, 
-              private router: Router,
-              private cache: Cache) {}
+  constructor(private _user_service: UserService_Rest, 
+              private _router: Router,
+              private _cache: Cache) {}
 
   ngOnInit() {
 
-    this.cache.emitter.subscribe(username => {
-      this._username=username;
-      console.log(this._username)
+    this._cache.emitter.subscribe(cache => {
+      if (cache.hasOwnProperty('username'))
+        this._username=cache.username;
     })
 
-    this.user_service.get()
-      .subscribe(data => {}, error => {
-        this.router.navigateByUrl('login')
+    this._user_service.get()
+      .subscribe(data => {
+        this._router.navigateByUrl('dashboard')
+      }, error => {
+        this._router.navigateByUrl('login')
+      })
+  }
+
+  logout() {
+    this._user_service.logout()
+      .subscribe(() => {
+        this._router.navigateByUrl('login')
       })
   }
 

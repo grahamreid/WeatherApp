@@ -5,11 +5,12 @@
   <i class="fa fa-3x fa-cloud px-2"></i>
 </div>
 <div class="card w-75 w-xs-100 mx-auto py-5 minw-xxs">
-  <form class="maxw-sm mx-auto d-flex flex-column w-75">
+  <form class="maxw-sm mx-auto d-flex flex-column w-75" (keydown.enter)="$event.preventDefault()">
       <h4 class="mb-4 text-center">An app that will make you question <b>weather</b> I'm any good at puns.</h4>
       <div class="form-group">
         <label for="login">Login</label>
-        <input #username type="username" class="form-control" id="login" placeholder="Enter Username">
+        <input  #username type="username" class="form-control" id="login" placeholder="Enter Username" 
+                (keydown.enter)="handle_login(username.value)">
         <small id="signInHelp" class="form-text text-muted">No existing username required; Sign in to sign up.</small>
       </div>
       <div class="btn btn-primary mx-3" (click)="handle_login(username.value)">Sign in</div>

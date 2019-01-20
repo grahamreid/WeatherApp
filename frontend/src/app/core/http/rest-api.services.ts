@@ -14,8 +14,8 @@ export class UserService_Rest {
     get() {
         return this.http.get(this._url)
             .pipe(
-                map(username => {
-                    this.cache.set('username', username)
+                map(body => {
+                    this.cache.set('username', body["username"])
                 })
             )
     }
@@ -23,9 +23,18 @@ export class UserService_Rest {
     login(username: string) {
         return this.http.post(this._url, {'username': username})
             .pipe(
-                map(username => {
-                    this.cache.set('username', username)
+                map(body => {
+                    this.cache.set('username', body["username"])
                 })
             )        
+    }
+
+    logout() {
+        return this.http.delete(this._url)
+            .pipe(
+                map(() => {
+                    this.cache.set('username', '')
+                })
+            )
     }
 }
