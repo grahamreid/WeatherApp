@@ -1,15 +1,16 @@
 import express from 'express'
 import config from 'app/config.json'
 import User from 'app/models/user'
+import Weather from 'app/models/weather'
 import RedisConnector from 'app/connectors/redis-connector'
 import UserService_Redis from 'app/services/user-service'
+import OpenWeatherMap from 'app/services/weather-service'
 
 let router = express.Router();
 
 const redis_conn = new RedisConnector(config.redis)
 const user_service = new UserService_Redis(redis_conn);
-
-const USERNAME = 'USERNAME'
+const weather_service = new OpenWeatherMap(config.open_weather_map,redis_conn)
 
 //User "Posts" a new login attempt
 //Really this endpoint should probably change to "session"
@@ -52,6 +53,15 @@ router.route('/locations')
             .catch(err => next(err))
     })
 
+router.route('/weather')
+    .get((req,res,next) => {
+        new Weather(weather_service,req.body.locations).get()
+            .then(weather => res.send(weather))
+            .catch(err => next(err))
+        // console.log('in router')
+        // res.send({'blah': 'test'})
+    })
+
 router.use((req, res, next) => {
     const matching_route = router.stack.filter(layer => layer.route)
         .map(routes => {return {'path': routes.route.path, 'methods': routes.route.methods}})
@@ -59,9 +69,10 @@ router.use((req, res, next) => {
 
         if (matching_route && !(req.method in matching_route.methods))
             res.status(405).send({'error': 'Method ' + req.method + ' not allowed on ' + req.path})
-        if (!matching_route)
+        else if (!matching_route)
             res.status(404).send()
-        next()
+        else
+            next()
 })
 
 router.use((err, req, res, next) => {
