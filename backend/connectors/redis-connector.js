@@ -3,9 +3,10 @@ import bluebird from 'bluebird'
 
 bluebird.promisifyAll(redis)
 
+//Interface for redis
 export default class RedisConnector {
     constructor(config) {
-        console.log(config);
+        //Confirm attributes exist in config file
         if (['host', 'port'].every((property) => {
             return (property in config && config[property])
         }))

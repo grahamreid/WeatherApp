@@ -3,6 +3,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { LocationService_Rest } from '@app-root/core/http/rest-api.services'
 
+// Card and modal for when user is adding new location
 @Component({
   selector: 'app-add-new-location',
   templateUrl: './add-new-location.component.html',
@@ -11,7 +12,9 @@ import { LocationService_Rest } from '@app-root/core/http/rest-api.services'
 })
 export class AddNewLocationComponent implements OnInit {
 
+  // update dashboard after new location is added
   @Output() refresh: EventEmitter<any> = new EventEmitter();
+  // alert if adding location fails (displayed in modal)
   _error = false
 
   modalRef: BsModalRef;
@@ -22,10 +25,11 @@ export class AddNewLocationComponent implements OnInit {
   ngOnInit() {  
   }
 
-  //TODO: sanitize this
   add_new_location(location) {
     if (location === '')
       return
+
+    // Handle when user tries to save new location in modal
     this._error = false
     this.location_service.add_location(location)
       .subscribe((data) => {

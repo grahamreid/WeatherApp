@@ -2,6 +2,7 @@
 import {Subject} from 'rxjs'
 import {Injectable} from '@angular/core'
 
+//Cache service that allow components to share data
 @Injectable()
 export class Cache {
 

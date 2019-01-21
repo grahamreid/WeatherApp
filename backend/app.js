@@ -11,8 +11,6 @@ var RedisStore = require('connect-redis')(session);
 
 const app = express()
 
-// const RedisStoreSession = RedisStore(session)
-
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json())
 

@@ -20,11 +20,14 @@ export class AppComponent {
 
   ngOnInit() {
 
+    // if user logs in, need to update it here so it can be
+    // placed in the user dropdown in the top right of the nav bar
     this._cache.emitter.subscribe(cache => {
       if (cache.hasOwnProperty('username'))
         this._username=cache.username;
     })
 
+    // navigate after login
     this._user_service.get()
       .subscribe(data => {
         this._router.navigateByUrl('dashboard')

@@ -1,3 +1,5 @@
+//Abstraction of user that enables separation from service responsible for retrieving user info.
+//On reflection, this should instead be just a representation of the data returned by user_service.
 export default class User {
     constructor(user_service, username) {
         this._username = username

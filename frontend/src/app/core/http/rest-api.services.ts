@@ -11,6 +11,7 @@ export class UserService_Rest {
     constructor(private http: HttpClient,
                 private cache: Cache) {}
 
+    // username saved to cache to share new data with other components
     get() {
         return this.http.get(this._url)
             .pipe(
@@ -39,14 +40,12 @@ export class UserService_Rest {
     }
 }
 
-//ideally, would do error handling here rather than in component
 @Injectable()
 export class LocationService_Rest {
     _url = environment.app_api_url + '/locations';
 
-    constructor(private http: HttpClient,
-                private cache: Cache) {}
-
+    constructor(private http: HttpClient) {}
+    
     add_location(location) {
         return this.http.post(this._url, {"location": location})
     }
@@ -57,7 +56,7 @@ export class WeatherService_Rest {
     _url = environment.app_api_url + '/weather';
 
     constructor(private http: HttpClient) {}
-
+    
     get() {
         return this.http.get(this._url)
     }

@@ -8,21 +8,21 @@ import OpenWeatherMap from 'app/services/weather-service'
 
 let router = express.Router();
 
+//initialize connectors and services
 const redis_conn = new RedisConnector(config.redis)
 const user_service = new UserService_Redis(redis_conn);
 const weather_service = new OpenWeatherMap(config.open_weather_map,redis_conn)
 
-//User "Posts" a new login attempt
-//Really this endpoint should probably change to "session"
 router.route('/login')
+    //check if user is logged in
     .get((req, res, next) => {
         if (req.session.hasOwnProperty("username"))
             res.send({"username": req.session.username})
         else
             res.status(401).send({'error': 'Not logged in'})
     })
+    //User "Posts" a new login attempt
     .post((req, res, next) => {
-        //TODO: forward error to generic error handler, only set status here, and only set to 401 if username wasn't found
         if (req.body.hasOwnProperty("username"))
             new User(user_service, req.body.username).get()
                 .then((username) => {
@@ -35,16 +35,19 @@ router.route('/login')
         else
             res.status(400).send({'error': `"username" property missing from request body.`})
     })
+    //User logout
     .delete((req, res, next) => {
         req.session.destroy()
         res.send({'Success': 'Successfully Logged out.'})
     })
 
-//TODO: replace with user gotten from session
 router.route('/locations')
+    //Add new location to user's list of locations
     .post((req, res, next) => {
+        //Is new location valid with weather service?
         new Weather(weather_service, [req.body.location]).get()
             .then(weather => {
+                //Then add it to user's list of locations
                 return new User(user_service, req.session.username).add_location(req.body.location)
             })
             .then(() => res.send(req.body))
@@ -55,6 +58,7 @@ router.route('/locations')
                     next(err)
             })
     })
+    //Get list of locations for user (unused)
     .get((req, res, next) => {
         new User(user_service, req.session.username).get_locations()
             .then(locations => res.send(locations))
@@ -62,6 +66,7 @@ router.route('/locations')
     })
 
 router.route('/weather')
+    //Get weather (uses user from current session)
     .get((req,res,next) => {
         new User(user_service, req.session.username).get_locations()
             .then((locations) => {
@@ -73,6 +78,7 @@ router.route('/weather')
             .catch(err => next(err))
     })
 
+//Handle nonexistent routes and nonexistent methods on routes
 router.use((req, res, next) => {
     const matching_route = router.stack.filter(layer => layer.route)
         .map(routes => {return {'path': routes.route.path, 'methods': routes.route.methods}})
@@ -86,6 +92,7 @@ router.use((req, res, next) => {
             next()
 })
 
+//Handle session expired and unknown errors
 router.use((err, req, res, next) => {
     console.log(err)
     if (!req.session.hasOwnProperty('username'))

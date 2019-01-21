@@ -14,6 +14,7 @@ export class LocationComponent implements OnInit {
   ngOnInit() {
   }
 
+  //convert temperature to integer
   get temp() {
     return parseInt(this._data.temp)
   }

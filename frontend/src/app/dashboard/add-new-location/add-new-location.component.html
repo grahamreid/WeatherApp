@@ -3,7 +3,6 @@
       <i class="fa fa-3x fa-plus text-primary"></i>
     </div>
 </div>
-<!-- Modal -->
 <ng-template #modal>
   <div class="modal-body d-flex flex-column px-4 py-2">
     <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close" (click)=modalRef.hide()>
@@ -13,7 +12,6 @@
     <label for="new_location">City Name Only</label>
     <input #new_location type="username" class="form-control" id="new_location" (keydown.enter)="add_new_location(new_location.value)">
     <div class="d-flex">
-      <!-- <div *ngIf="_error">Location not found.</div> -->
       <button type="button" class="btn btn-primary mt-2 w-25 ml-auto my-2" (click)="add_new_location(new_location.value)">Save</button>
     </div>
   </div>

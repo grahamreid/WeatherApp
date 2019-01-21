@@ -3,8 +3,7 @@ export default class UserService_Redis {
         this._redisConnector = redisConnector
     }
 
-    //Unit test and try catch this stuff
-    //Accept whatever they login with -- save new user if doesn't exist
+    // Get user from redis. Make new user if doesn't exist.
     get_user(username) {
         return this._redisConnector.get(username)
             .then(user_info => {
@@ -22,6 +21,7 @@ export default class UserService_Redis {
         return this.set_locations(username, [])
     }
 
+    // Get all locations user has added so far.
     get_locations(username) {
         return this._redisConnector.get(username)
             .then(user_info => {
@@ -31,6 +31,7 @@ export default class UserService_Redis {
             })
     }
 
+    //save user's locations to redis
     set_locations(username, locations) {
         return this._redisConnector.set(username, {"username": username, "locations": locations})
     }

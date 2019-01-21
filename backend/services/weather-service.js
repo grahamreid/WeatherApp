@@ -1,7 +1,5 @@
 import request from 'node_modules/request-promise'
 
-//TODO: weather interface for actual weather data needed
-
 class WeatherService {
 
     constructor(redisConnector) {
@@ -21,6 +19,7 @@ class WeatherService {
     //mustoverride
     get_weather() {}
 
+    //save new weather data for 1 hr
     set_weather_to_cache(location,weather) {
         return this._redisConnector.setExpire(location,weather,3600)
     }
@@ -29,6 +28,7 @@ class WeatherService {
 export default class OpenWeatherMap extends WeatherService  {
     constructor(config, redisConnector) {
         super(redisConnector)
+        //make sure config properties are set
         if (['url', 'APPID','icon_url'].every((property) => {
             return (property in config && config[property])
         }))
@@ -37,7 +37,7 @@ export default class OpenWeatherMap extends WeatherService  {
             throw new Error('URL or app_key is missing from configuration.')
     }
 
-    //should cache invalid requests too
+    //Retrieve weather from OpenWeatherMap (in fahrenheit)
     get_weather_from_api(location) {
         console.log('Getting data from OpenWeatherMap')
         const options = {
@@ -51,6 +51,7 @@ export default class OpenWeatherMap extends WeatherService  {
         }
         const req = request.get(options)
 
+        //After getting, save to cache
         req.then(data => {return this.set_weather_to_cache(location,data)})
 
         return req.catch(res => {
@@ -65,9 +66,11 @@ export default class OpenWeatherMap extends WeatherService  {
     }
 
     get_weather(location) {
+        // First check cache
         return this.get_weather_from_cache(location)
             .catch(err => {
                 console.log(err)
+                //Then go to API if not in cache
                 return this.get_weather_from_api(location)
             })
             .then((res) => {

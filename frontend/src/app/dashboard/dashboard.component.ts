@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
     this.refresh()
   }
 
+  // called upon login and when new location is added
   refresh() {
     this._weather_service.get()
       .subscribe(data => {this._data = data})
