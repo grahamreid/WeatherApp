@@ -71,7 +71,7 @@ export default class OpenWeatherMap extends WeatherService  {
             })
             .then((res) => {
                 return {
-                    "location": location,
+                    "location": res.name,
                     "icon": this._config.icon_url + res.weather[0].icon + '.png',
                     "temp": res.main.temp
                 }

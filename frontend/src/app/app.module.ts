@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LocationComponent } from './dashboard/location/location.component';
+import { AddNewLocationComponent } from './dashboard/add-new-location/add-new-location.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    LocationComponent
+    LocationComponent,
+    AddNewLocationComponent
   ],
   imports: [
     BrowserModule,

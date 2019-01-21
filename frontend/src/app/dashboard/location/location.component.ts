@@ -14,4 +14,8 @@ export class LocationComponent implements OnInit {
   ngOnInit() {
   }
 
+  get temp() {
+    return parseInt(this._data.temp)
+  }
+
 }

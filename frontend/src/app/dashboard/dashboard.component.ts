@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import {LocationComponent} from '@app-root/dashboard/location/location.component'
+import {WeatherService_Rest} from '@app-root/core/http/rest-api.services'
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  providers: [WeatherService_Rest]
 })
 export class DashboardComponent implements OnInit {
 
-  _locations = [{'Name': 'Louisville, KY'},
-                {'Name': 'Cincinnati, OH'}]
+  _data
 
-  constructor() { }
+  constructor(private _weather_service: WeatherService_Rest) { }
 
   ngOnInit() {
+    this._weather_service.get()
+      .subscribe(data => {this._data = data})
   }
 
 }

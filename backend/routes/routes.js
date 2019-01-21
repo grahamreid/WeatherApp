@@ -68,7 +68,6 @@ router.route('/weather')
                 return new Weather(weather_service,locations).get()
             })
             .then(weather => {
-                console.log(weather);
                 res.send(weather)
             })
             .catch(err => next(err))

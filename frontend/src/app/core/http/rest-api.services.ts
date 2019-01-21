@@ -38,3 +38,14 @@ export class UserService_Rest {
             )
     }
 }
+
+@Injectable()
+export class WeatherService_Rest {
+    _url = environment.app_api_url + '/weather';
+
+    constructor(private http: HttpClient) {}
+
+    get() {
+        return this.http.get(this._url)
+    }
+}
