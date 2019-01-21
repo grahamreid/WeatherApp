@@ -1,5 +1,7 @@
 import request from 'node_modules/request-promise'
 
+//TODO: weather interface for actual weather data needed
+
 class WeatherService {
 
     constructor(redisConnector) {
@@ -27,7 +29,7 @@ class WeatherService {
 export default class OpenWeatherMap extends WeatherService  {
     constructor(config, redisConnector) {
         super(redisConnector)
-        if (['url', 'APPID'].every((property) => {
+        if (['url', 'APPID','icon_url'].every((property) => {
             return (property in config && config[property])
         }))
             this._config = config
@@ -41,12 +43,24 @@ export default class OpenWeatherMap extends WeatherService  {
             uri: this._config.url + 'weather',
             qs: {
                 q: location,
-                APPID: this._config.APPID
+                APPID: this._config.APPID,
+                units: "imperial"
             },
             json: true
         }
-        return request.get(options)
-            .then((data) => {return this.set_weather_to_cache(location,data)})
+        const req = request.get(options)
+
+        req.then(data => {return this.set_weather_to_cache(location,data)})
+
+        return req.catch(res => {
+                if (res.error.cod === '404')
+                    throw {
+                        'cod': '400',
+                        'message': 'Bad location'
+                    }
+                else
+                    throw res.error
+            })
     }
 
     get_weather(location) {
@@ -54,6 +68,13 @@ export default class OpenWeatherMap extends WeatherService  {
             .catch(err => {
                 console.log(err)
                 return this.get_weather_from_api(location)
+            })
+            .then((res) => {
+                return {
+                    "location": location,
+                    "icon": this._config.icon_url + res.weather[0].icon + '.png',
+                    "temp": res.main.temp
+                }
             })
     }
 }

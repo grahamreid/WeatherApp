@@ -43,9 +43,17 @@ router.route('/login')
 //TODO: replace with user gotten from session
 router.route('/locations')
     .post((req, res, next) => {
-        new User(user_service, req.session.username).add_location(req.body.location)
-            .then(locations => res.send(locations))
-            .catch(err => next(err))
+        new Weather(weather_service, [req.body.location]).get()
+            .then(weather => {
+                return new User(user_service, req.session.username).add_location(req.body.location)
+            })
+            .then(() => res.send(req.body))
+            .catch(err => {
+                if (err.hasOwnProperty('cod'))
+                    res.status(err.cod, err.message).send(err)
+                else              
+                    next(err)
+            })
     })
     .get((req, res, next) => {
         new User(user_service, req.session.username).get_locations()
@@ -55,11 +63,15 @@ router.route('/locations')
 
 router.route('/weather')
     .get((req,res,next) => {
-        new Weather(weather_service,req.body.locations).get()
-            .then(weather => res.send(weather))
+        new User(user_service, req.session.username).get_locations()
+            .then((locations) => {
+                return new Weather(weather_service,locations).get()
+            })
+            .then(weather => {
+                console.log(weather);
+                res.send(weather)
+            })
             .catch(err => next(err))
-        // console.log('in router')
-        // res.send({'blah': 'test'})
     })
 
 router.use((req, res, next) => {
