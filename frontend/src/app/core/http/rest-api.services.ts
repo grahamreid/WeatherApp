@@ -39,6 +39,19 @@ export class UserService_Rest {
     }
 }
 
+//ideally, would do error handling here rather than in component
+@Injectable()
+export class LocationService_Rest {
+    _url = environment.app_api_url + '/locations';
+
+    constructor(private http: HttpClient,
+                private cache: Cache) {}
+
+    add_location(location) {
+        return this.http.post(this._url, {"location": location})
+    }
+}
+
 @Injectable()
 export class WeatherService_Rest {
     _url = environment.app_api_url + '/weather';

@@ -37,6 +37,7 @@ export default class OpenWeatherMap extends WeatherService  {
             throw new Error('URL or app_key is missing from configuration.')
     }
 
+    //should cache invalid requests too
     get_weather_from_api(location) {
         console.log('Getting data from OpenWeatherMap')
         const options = {

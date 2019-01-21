@@ -31,6 +31,10 @@
     font-size: 0.8rem
 }
 
+.modal-dialog {
+    margin-top: 35vh;
+}
+
 @include media-breakpoint-down(sm) {
     .hide-xs {
         display: none;

@@ -1,3 +1,4 @@
 
 <h3 class="my-3 text-center">Current Weather</h3>
 <app-location *ngFor="let location of _data" [_data] = "location" class="my-2"></app-location>
+<app-add-new-location (refresh)="refresh()"></app-add-new-location>
