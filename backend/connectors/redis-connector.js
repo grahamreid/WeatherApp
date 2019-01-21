@@ -5,10 +5,11 @@ bluebird.promisifyAll(redis)
 
 export default class RedisConnector {
     constructor(config) {
+        console.log(config);
         if (['host', 'port'].every((property) => {
             return (property in config && config[property])
         }))
-            this._client = redis.createClient(redis)
+            this._client = redis.createClient(config)
         else
             throw new Error('Host or port is missing in redis configuration.')
     }
