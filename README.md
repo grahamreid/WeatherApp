@@ -17,7 +17,7 @@ Weather application demonstration for programming interview.
 <b>Example city names</b>:
 * Louisville
 * cincinnati
-* Los angeles
+* los angeles
 
 # Dependencies
 
