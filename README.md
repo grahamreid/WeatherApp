@@ -60,4 +60,5 @@ This application uses the following technologies:
     }
 }
 ```
-9. Run application/server: `npm start`
+9. Run redis: `redis-server`
+10. Run application/server: `npm start`
