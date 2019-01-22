@@ -12,7 +12,7 @@ Weather application demonstration for programming interview.
 # Usage
 
 * Users require only their desired name to login, and there is no verification step.
-* Users cities that are added must be done using exact syntax (although they are not case-sensitive).
+* User's cities that are added must be done using exact syntax (although they are not case-sensitive).
 
 <b>Example city names</b>:
 * Louisville
