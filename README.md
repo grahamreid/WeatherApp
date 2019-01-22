@@ -39,11 +39,11 @@ This application uses the following technologies:
 3. [Install Redis](https://redis.io/)
 4. Install angular cli `npm i -g @angular/latest` (last tested with 7.2.2)
 5. Install nodemon `npm i -g @nodemon/latest` (last tested with 1.18.9(
-6. Install dependencies on Angular app: `cd /frontend; npm i`
+6. Install dependencies on Angular app: `cd frontend; npm i`
 7. Build UI: `ng build` or build prod: `ng build --prod`
 7. Install dependencies on Backend server: `cd ../backend; npm i`
-8. Create `config.json` file in root of backend `touch /backend/config.json`, and paste the following into it:
-
+8. Create `config.json` file in root of backend `touch config.json`, and paste the following into it:
+```
 {
     "port": 80,
     "redis": {
@@ -59,5 +59,5 @@ This application uses the following technologies:
         "secret": "<use any string here>"
     }
 }
-
+```
 9. Run application/server: `npm start`
