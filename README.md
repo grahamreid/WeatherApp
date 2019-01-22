@@ -52,7 +52,7 @@ This application uses the following technologies:
     },
     "open_weather_map": {
         "url": "http://api.openweathermap.org/data/2.5/",
-        "APPID": "<Your APPID from [OpenWeatherMap](https://openweathermap.org/appid) here>",
+        "APPID": "<Your APPID from https://openweathermap.org/appid here>",
         "icon_url": "http://openweathermap.org/img/w/"
     },
     "session": {
