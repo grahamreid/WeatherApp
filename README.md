@@ -36,8 +36,8 @@ This application uses the following technologies:
 
 1. Clone this repo.
 2. [Download and install node](https://nodejs.org/en/) (LTS)
-    a. Use nvm: https://github.com/creationix/nvm#installation
-    b. Install version 10.15.0 of node `nvm istall 10.15.0`
+    1. Use nvm: https://github.com/creationix/nvm#installation
+    2. Install version 10.15.0 of node `nvm istall 10.15.0`
 3. [Install Redis](https://redis.io/topics/quickstart#installing-redis)
 4. Install angular cli `npm i -g @angular/cli@latest` (last tested with 7.2.2)
 5. Install nodemon `npm i -g nodemon@latest` (last tested with 1.18.9)
