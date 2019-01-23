@@ -36,7 +36,7 @@ This application uses the following technologies:
 
 1. Clone this repo.
 2. [Download and install node](https://nodejs.org/en/) (LTS)
-3. [Install Redis](https://redis.io/)
+3. [Install Redis](https://redis.io/topics/quickstart#installing-redis)
 4. Install angular cli `npm i -g @angular/cli@latest` (last tested with 7.2.2)
 5. Install nodemon `npm i -g nodemon@latest` (last tested with 1.18.9)
 6. Install dependencies on Angular app: `cd frontend; npm i`
