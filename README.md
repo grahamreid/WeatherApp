@@ -39,9 +39,8 @@ This application uses the following technologies:
     1. Use nvm: https://github.com/creationix/nvm#installation
     2. Install version 10.15.0 of node `nvm install 10.15.0`
 3. [Install Redis](https://redis.io/topics/quickstart#installing-redis)
-    1. If you are on linux, you may need to do the following (from your redis install folder):
+    1. If you are on linux, you may need to add redis executables to your path (from your redis install folder):
     ```
-    sudo mkdir -p /etc/redis /var/lib/redis /var/redis/6379
     sudo cp src/redis-server src/redis-cli /usr/local/bin
     PATH=$PATH:/usr/local/bin
     ```
