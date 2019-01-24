@@ -69,5 +69,5 @@ This application uses the following technologies:
     }
 }
 ```
-11. Run redis: `redis-server` (make sure you're running from a folder with 755 privileges, so that redis can persist its db)
+11. Run redis: `redis-server --daemonize yes` (make sure you're running from a folder with 755 privileges, so that redis can persist its db)
 12. Run application/server: `npm start`
