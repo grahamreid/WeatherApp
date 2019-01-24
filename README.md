@@ -43,9 +43,9 @@ This application uses the following technologies:
 5. Install nodemon `npm i -g nodemon@latest` (last tested with 1.18.9)
 6. Install dependencies on Angular app: `cd frontend; npm i`
 7. Install node-sass (installed separately because it's platform specific, but can be included as npm rebuild in angular.json as well): `npm install --unsafe-perm node-sass`
-7. Build UI: `ng build` or build prod: `ng build --prod`
-7. Install dependencies on Backend server: `cd ../backend; npm i`
-8. Create `config.json` file in root of backend `touch config.json`, and paste the following into it:
+8. Build UI: `ng build` or build prod: `ng build --prod`
+9. Install dependencies on Backend server: `cd ../backend; npm i`
+10. Create `config.json` file in root of backend `touch config.json`, and paste the following into it:
 ```
 {
     "port": 80,
@@ -63,5 +63,5 @@ This application uses the following technologies:
     }
 }
 ```
-9. Run redis: `redis-server`
-10. Run application/server: `npm start`
+11. Run redis: `redis-server`
+12. Run application/server: `npm start`
