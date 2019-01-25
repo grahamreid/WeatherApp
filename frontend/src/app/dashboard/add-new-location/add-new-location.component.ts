@@ -41,13 +41,15 @@ export class AddNewLocationComponent implements OnInit {
       }, (err) => {
           if (err.status==400) {
             this._error = true
+            document.getElementById('name-alert').hidden = false
           }
         })
   }
 
   //hacky, really the modal should be its own component but this is a quickfix
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modal_service.show(template);
+    const mod_ref = this.modalRef = this.modal_service.show(template);
+    document.getElementById('name-alert').hidden = true
     setTimeout(() => document.getElementById('new_location').focus(), 100
     )}
 }

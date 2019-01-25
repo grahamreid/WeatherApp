@@ -6,7 +6,8 @@
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
       "start": "nodemon --exec babel-node app.js",
-      "build": "cd ../frontend; ng build"
+      "build": "cd ../frontend; ng build",
+      "server": "babel-node app.js"
    },
    "author": "Graham Reid",
    "license": "MIT",
